@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomeScreen from "../screens/HomeScreen";
 import PetInfoScreen from "../screens/PetInfoScreen";
 import CalendarScreen from "../screens/CalandarScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import { Text } from "react-native";
 
 const Tab = createBottomTabNavigator();
@@ -20,7 +21,8 @@ export default function MainNavigator() {
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Pets" component={PetInfoScreen} />
-        <Tab.Screen name="Calendar" component={CalendarScreen} />
+              <Tab.Screen name="Calendar" component={CalendarScreen} />
+              <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

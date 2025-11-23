@@ -1,21 +1,20 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { colors, fontSizes } from "../globalStyles";
+import { useNavigation } from "@react-navigation/native";
 
-export default function HeaderBar({ title, onProfilePress }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-
-      <TouchableOpacity onPress={onProfilePress}>
-        <Image
-          source={{
-            uri: "https://i.pravatar.cc/100", // placeholder avatar
-          }}
-          style={styles.profileImage}
-        />
-      </TouchableOpacity>
-    </View>
-  );
+export default function HeaderBar({ title }) {
+    const navigation = useNavigation();
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>{title}</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+                <Image
+                    source={{ uri: "https://i.pravatar.cc/100" }}
+                    style={styles.profileImage}
+                />
+            </TouchableOpacity>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({

@@ -1,11 +1,6 @@
-import { View } from "react-native";
-import HomeScreen from "./screens/HomeScreen";
-import "./global.css";
+import MainNavigator from "./navigation/MainNavigator";
+import "./globalStyles";
 
 export default function App() {
-  return (
-    <View className="flex-1">
-      <HomeScreen />
-    </View>
-  );
+  return <MainNavigator />;
 }

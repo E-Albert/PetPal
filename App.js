@@ -1,6 +1,7 @@
+import { TaskProvider } from "./context/TaskContext";
+import MainNavigator from "./navigation/MainNavigator";
 import { useFonts, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from "@expo-google-fonts/poppins";
 import { View, Text, ActivityIndicator } from "react-native";
-import MainNavigator from "./navigation/MainNavigator";
 import { colors } from "./globalStyles";
 
 export default function App() {
@@ -19,5 +20,9 @@ export default function App() {
     );
   }
 
-  return <MainNavigator />;
+  return (
+    <TaskProvider>
+      <MainNavigator />
+    </TaskProvider>
+  );
 }

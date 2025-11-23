@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { colors, fontSizes } from "../globalStyles";
 import { useNavigation } from "@react-navigation/native";
+import { useProfile } from "../context/ProfileContext";
 
 /**
  * HeaderBar Component
@@ -8,16 +9,13 @@ import { useNavigation } from "@react-navigation/native";
  */
 export default function HeaderBar({ title }) {
   const navigation = useNavigation();
+  const { photo } = useProfile(); // 👈 get actual profile photo
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-
       <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-        <Image
-          source={{ uri: "https://i.pravatar.cc/100" }}
-          style={styles.profileImage}
-        />
+        <Image source={{ uri: photo }} style={styles.profileImage} />
       </TouchableOpacity>
     </View>
   );

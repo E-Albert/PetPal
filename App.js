@@ -1,5 +1,7 @@
 import { TaskProvider } from "./context/TaskContext";
 import { PetProvider } from "./context/PetContext";
+import { ReminderProvider } from "./context/ReminderContext";
+import { ProfileProvider } from "./context/ProfileContext"; // 👈 add this
 import MainNavigator from "./navigation/MainNavigator";
 import {
   useFonts,
@@ -10,12 +12,6 @@ import {
 import { View, Text, ActivityIndicator } from "react-native";
 import { colors } from "./globalStyles";
 
-/**
- * App.js
- * Entry point for the PetPal app
- * - Loads fonts
- * - Wraps app with TaskProvider & PetProvider
- */
 export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -23,7 +19,6 @@ export default function App() {
     Poppins_700Bold,
   });
 
-  // 🕓 Loading screen while fonts load
   if (!fontsLoaded) {
     return (
       <View
@@ -48,11 +43,14 @@ export default function App() {
     );
   }
 
-  // ✅ Wrap app in both providers
   return (
     <TaskProvider>
       <PetProvider>
-        <MainNavigator />
+        <ReminderProvider>
+          <ProfileProvider>
+            <MainNavigator />
+          </ProfileProvider>
+        </ReminderProvider>
       </PetProvider>
     </TaskProvider>
   );

@@ -9,7 +9,7 @@ import { useProfile } from "../context/ProfileContext";
  */
 export default function HeaderBar({ title }) {
   const navigation = useNavigation();
-  const { photo } = useProfile(); // 👈 get actual profile photo
+  const { photo } = useProfile(); 
 
   return (
     <View style={styles.container}>

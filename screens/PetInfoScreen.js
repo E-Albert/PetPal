@@ -24,7 +24,7 @@ export default function PetInfoScreen() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
-  const [selectedPet, setSelectedPet] = useState(null); // track pet for editing
+  const [selectedPet, setSelectedPet] = useState(null);
 
   // 🖼️ Choose or change photo
   const pickImage = async () => {

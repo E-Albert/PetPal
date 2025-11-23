@@ -1,7 +1,7 @@
 import { TaskProvider } from "./context/TaskContext";
 import { PetProvider } from "./context/PetContext";
 import { ReminderProvider } from "./context/ReminderContext";
-import { ProfileProvider } from "./context/ProfileContext"; // 👈 add this
+import { ProfileProvider } from "./context/ProfileContext"; 
 import MainNavigator from "./navigation/MainNavigator";
 import {
   useFonts,

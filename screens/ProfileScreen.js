@@ -72,8 +72,10 @@ export default function ProfileScreen() {
       quality: 0.8,
     });
 
-    if (!result.canceled) {
-      setPhoto(result.assets[0].uri);
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      const newPhoto = result.assets[0].uri;
+      setPhoto(newPhoto);
+      updateProfile(name, newPhoto);
     }
   };
 
@@ -84,7 +86,7 @@ export default function ProfileScreen() {
       await AsyncStorage.setItem("profileName", newName);
       await AsyncStorage.setItem("profilePhoto", photo);
       setName(newName);
-      updateProfile(newName, photo); // 👈 updates global context instantly
+      updateProfile(newName, photo); 
       setModalVisible(false);
     } catch (e) {
       console.log("Error saving profile:", e);

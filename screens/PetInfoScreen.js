@@ -14,13 +14,19 @@ import { usePets } from "../context/PetContext";
 import { globalStyles, colors } from "../globalStyles";
 import HeaderBar from "../components/HeaderBar";
 
+/**
+ * PetInfoScreen
+ * Manage your pets — view, add, edit, delete, and add photo
+ */
 export default function PetInfoScreen() {
-  const { pets, addPet, deletePet } = usePets();
+  const { pets, addPet, deletePet, editPet } = usePets();
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
+  const [selectedPet, setSelectedPet] = useState(null); // track pet for editing
 
+  // 🖼️ Choose or change photo
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
@@ -40,14 +46,41 @@ export default function PetInfoScreen() {
     }
   };
 
-  const handleAddPet = () => {
-    if (name.trim() && type.trim()) {
+  // ➕ or ✏️ Handle Add/Edit Pet
+  const handleSavePet = () => {
+    if (!name.trim() || !type.trim()) return;
+
+    if (selectedPet) {
+      // Edit existing pet
+      editPet(selectedPet.id, { name, type, image });
+    } else {
+      // Add new pet
       addPet(name, type, image);
-      setName("");
-      setType("");
-      setImage(null);
-      setModalVisible(false);
     }
+
+    setName("");
+    setType("");
+    setImage(null);
+    setSelectedPet(null);
+    setModalVisible(false);
+  };
+
+  // ✏️ Start editing a pet
+  const handleEditPress = (pet) => {
+    setSelectedPet(pet);
+    setName(pet.name);
+    setType(pet.type);
+    setImage(pet.image || null);
+    setModalVisible(true);
+  };
+
+  // 🧹 Close modal + reset fields
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setName("");
+    setType("");
+    setImage(null);
+    setSelectedPet(null);
   };
 
   return (
@@ -67,9 +100,16 @@ export default function PetInfoScreen() {
               )}
               <Text style={styles.petName}>{item.name}</Text>
               <Text style={styles.petType}>{item.type}</Text>
-              <TouchableOpacity onPress={() => deletePet(item.id)}>
-                <Text style={styles.deleteText}>Remove</Text>
-              </TouchableOpacity>
+
+              <View style={styles.actions}>
+                <TouchableOpacity onPress={() => handleEditPress(item)}>
+                  <Text style={styles.editText}>Edit</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => deletePet(item.id)}>
+                  <Text style={styles.deleteText}>Remove</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
           ListEmptyComponent={
@@ -78,6 +118,7 @@ export default function PetInfoScreen() {
           contentContainerStyle={{ paddingVertical: 10 }}
         />
 
+        {/* Add Pet Button */}
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => setModalVisible(true)}
@@ -86,11 +127,13 @@ export default function PetInfoScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Add Pet Modal */}
+      {/* Add/Edit Pet Modal */}
       <Modal transparent={true} animationType="fade" visible={modalVisible}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={globalStyles.titleText}>Add a Pet</Text>
+            <Text style={globalStyles.titleText}>
+              {selectedPet ? "Edit Pet" : "Add a Pet"}
+            </Text>
 
             <TextInput
               style={styles.input}
@@ -116,15 +159,14 @@ export default function PetInfoScreen() {
             </TouchableOpacity>
 
             <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={styles.cancelBtn}
-                onPress={() => setModalVisible(false)}
-              >
+              <TouchableOpacity style={styles.cancelBtn} onPress={handleCloseModal}>
                 <Text style={styles.cancelText}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.saveBtn} onPress={handleAddPet}>
-                <Text style={styles.saveText}>Add</Text>
+              <TouchableOpacity style={styles.saveBtn} onPress={handleSavePet}>
+                <Text style={styles.saveText}>
+                  {selectedPet ? "Save" : "Add"}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -164,10 +206,19 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginVertical: 4,
   },
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "60%",
+    marginTop: 8,
+  },
+  editText: {
+    color: colors.primary,
+    fontFamily: "Poppins_600SemiBold",
+  },
   deleteText: {
     color: colors.error,
     fontFamily: "Poppins_600SemiBold",
-    marginTop: 6,
   },
   addButton: {
     backgroundColor: colors.primary,

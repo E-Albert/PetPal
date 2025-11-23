@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { globalStyles } from "../globalStyles";
 
 export default function HomeScreen() {
@@ -8,6 +8,10 @@ export default function HomeScreen() {
       <Text style={globalStyles.subtitleText}>
         Your daily pet care tracker
       </Text>
+
+      <TouchableOpacity style={globalStyles.button}>
+        <Text style={globalStyles.buttonText}>Add New Task</Text>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -1,4 +1,5 @@
 import { TaskProvider } from "./context/TaskContext";
+import { PetProvider } from "./context/PetContext";
 import MainNavigator from "./navigation/MainNavigator";
 import {
   useFonts,
@@ -12,8 +13,8 @@ import { colors } from "./globalStyles";
 /**
  * App.js
  * Entry point for the PetPal app
- * - Loads custom fonts
- * - Wraps navigation in TaskProvider context
+ * - Loads fonts
+ * - Wraps app with TaskProvider & PetProvider
  */
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +23,7 @@ export default function App() {
     Poppins_700Bold,
   });
 
-  // 🕓 Show loading screen while fonts are loading
+  // 🕓 Loading screen while fonts load
   if (!fontsLoaded) {
     return (
       <View
@@ -47,10 +48,12 @@ export default function App() {
     );
   }
 
-  // ✅ Wrap the app in TaskProvider and load the main navigation
+  // ✅ Wrap app in both providers
   return (
     <TaskProvider>
-      <MainNavigator />
+      <PetProvider>
+        <MainNavigator />
+      </PetProvider>
     </TaskProvider>
   );
 }

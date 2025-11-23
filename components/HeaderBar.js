@@ -2,19 +2,25 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { colors, fontSizes } from "../globalStyles";
 import { useNavigation } from "@react-navigation/native";
 
+/**
+ * HeaderBar Component
+ * Displays the screen title and a profile avatar button
+ */
 export default function HeaderBar({ title }) {
-    const navigation = useNavigation();
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-                <Image
-                    source={{ uri: "https://i.pravatar.cc/100" }}
-                    style={styles.profileImage}
-                />
-            </TouchableOpacity>
-        </View>
-    );
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+
+      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <Image
+          source={{ uri: "https://i.pravatar.cc/100" }}
+          style={styles.profileImage}
+        />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

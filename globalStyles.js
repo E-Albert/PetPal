@@ -13,7 +13,7 @@ export const colors = {
   error: "#F87171",
 };
 
-// 🖋️ Font sizes (you can expand as needed)
+// 🖋️ Font sizes (adjust as needed)
 export const fontSizes = {
   small: 14,
   medium: 16,
@@ -21,7 +21,7 @@ export const fontSizes = {
   xlarge: 28,
 };
 
-// 💅 Global styles using the palette
+// 💅 Global reusable styles
 export const globalStyles = StyleSheet.create({
   screenContainer: {
     flex: 1,

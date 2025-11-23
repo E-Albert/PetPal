@@ -1,12 +1,16 @@
 import { View, Text } from "react-native";
 import { globalStyles } from "../globalStyles";
 
-export default function HomeScreen() {
+/**
+ * PetInfoScreen
+ * Displays basic pet information and details (placeholder for now)
+ */
+export default function PetInfoScreen() {
   return (
     <View style={globalStyles.screenContainer}>
-      <Text style={globalStyles.titleText}>🐾 PetPal</Text>
+      <Text style={globalStyles.titleText}>🐶 My Pets</Text>
       <Text style={globalStyles.subtitleText}>
-        Your daily pet care tracker
+        Add and view your pet profiles here
       </Text>
     </View>
   );

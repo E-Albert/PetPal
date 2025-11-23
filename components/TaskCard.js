@@ -1,6 +1,11 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { colors, fontSizes } from "../globalStyles";
 
+/**
+ * TaskCard Component
+ * Displays an individual task with toggle and delete actions
+ */
 export default function TaskCard({ task, onToggle, onDelete }) {
   return (
     <View style={[styles.card, task.completed && styles.completed]}>
@@ -15,14 +20,15 @@ export default function TaskCard({ task, onToggle, onDelete }) {
 
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => onToggle(task.id)}>
-          <Text style={styles.actionText}>
-            {task.completed ? "Undo" : "Done"}
-          </Text>
+          <Ionicons
+            name={task.completed ? "refresh-circle" : "checkmark-circle"}
+            size={26}
+            color={task.completed ? colors.success : colors.primary}
+          />
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => onDelete(task.id)}>
-          <Text style={[styles.actionText, { color: colors.error }]}>
-            Delete
-          </Text>
+          <Ionicons name="trash" size={24} color={colors.error} />
         </TouchableOpacity>
       </View>
     </View>
@@ -51,11 +57,8 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     marginTop: 8,
-  },
-  actionText: {
-    color: colors.primary,
-    fontFamily: "Poppins_600SemiBold",
+    gap: 16,
   },
 });
